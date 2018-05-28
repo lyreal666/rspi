@@ -4,6 +4,7 @@
 import logging
 import pyaudio
 import wave
+from datetime import datetime
 
 logging.basicConfig(level=logging.DEBUG)
 debug = logging.debug
@@ -14,21 +15,22 @@ __author__ = 'LY'
     
 '''
 
-CHUNK = 1024
+CHUNK = 512
 FORMAT = pyaudio.paInt16
-CHANNELS = 2
+CHANNELS = 1
 RATE = 16000
 
 
-def recode(seconds, file_name):
+def recode(seconds):
     r"""
     录音接口
     :param seconds:
     :param file_name:
-    :return: 是否录音成功
+    :return: 录音文件名
     """
     RECORD_SECONDS = seconds
-    WAVE_OUTPUT_FILENAME = "../output/audios/%s.wav" % file_name
+    WAVE_OUTPUT_FILENAME = "../output/audios/%s.wav" % str(datetime.now().timestamp())
+
     p = pyaudio.PyAudio()
 
     stream = p.open(format=FORMAT,
@@ -58,11 +60,11 @@ def recode(seconds, file_name):
     wf.writeframes(b''.join(frames))
     wf.close()
 
-    return True
+    return WAVE_OUTPUT_FILENAME
 
 
 def main():
-    recode(5, "test")
+    recode(3)
 
 
 if __name__ == '__main__':

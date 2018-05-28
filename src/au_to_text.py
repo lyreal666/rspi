@@ -16,7 +16,7 @@ __author__ = 'LY'
 '''
 
 try:
-    app_cfg = json.load(open("../configs/App.json", "r"))
+    app_cfg = json.load(open("../configs/baidu_yuyin.json", "r"))
 except Exception as e:
     debug("解析配置信息出现问题:", e)
 
@@ -41,10 +41,7 @@ def get_token():
     token_url = get_token_url()
     try:
         with request.urlopen(token_url) as ug:
-            debug(f"Status: {ug.status},{ug.reason}")
             data = json.loads(ug.read().decode("utf-8"))
-            for k, v in data.items():
-                debug(f"{k}, {v}")
             token = data["access_token"]
     except Exception as exp:
         debug('获取token异常,请检查网络', exp)
@@ -89,18 +86,16 @@ def voice_to_text(audio_path):
                                  ' AppleWebKit/536.26 (KHTML, like Gecko) '
                                  'Version/8.0 Mobile/10A5376e Safari/8536.25')
     with request.urlopen(req, data=json.dumps(data).encode('utf-8')) as f:
-        debug('Status: %s,%s' % (f.status, f.reason))
-        for k, v in f.getheaders():
-            debug('%s: %s' % (k, v))
         data = json.loads(f.read().decode('utf-8'))
         if "result" in data:
-            return data["result"][0]
+            return data["result"]
         else:
             return None
 
 
 def main():
-    audio_path = r'../static/audios/A2_1.wav'
+    # audio_path = r'../static/audios/A2_1.wav'
+    audio_path = r'../output/audios/test.wav'
     print(voice_to_text(audio_path))
 
 
