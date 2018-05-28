@@ -17,6 +17,8 @@ __author__ = 'LY'
 
 
 def say2xiaoMei(text):
+    if text is None:
+        raise ValueError(f"传给小美的数据有问题, text: {text}")
     config = json.load(open("../configs/jasmine.json", "r"))
     key = config["api_key"]
     secret = config["api_secret"]

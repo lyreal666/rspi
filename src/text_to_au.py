@@ -37,20 +37,21 @@ def text_to_voice(text):
         debug("----------------------------")
         debug(f"Status: {ug.status},{ug.reason}")
         data = ug.read()
-        save_voice(data, file_name)
-        return data
+        file_name = save_voice(data, file_name)
+        return file_name
 
 
 def save_voice(data, file_name):
     with open("../output/audios/%s.mp3" % file_name, "wb") as fw:
         fw.write(data)
-    return file_name
+    return "../output/audios/%s.mp3" % file_name
 
 
 def main():
-    text = "1234567"
+    text = "自我介绍"
     print(get_file_name(text))
     data = text_to_voice(text)
+    save_voice(data, "zwjs")
 
 
 if __name__ == '__main__':

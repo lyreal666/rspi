@@ -88,15 +88,15 @@ def voice_to_text(audio_path):
     with request.urlopen(req, data=json.dumps(data).encode('utf-8')) as f:
         data = json.loads(f.read().decode('utf-8'))
         if "result" in data:
-            return data["result"]
+            return data["result"][0]
         else:
             return None
 
 
 def main():
     # audio_path = r'../static/audios/A2_1.wav'
-    audio_path = r'../output/audios/test.wav'
-    print(voice_to_text(audio_path))
+    audio_path = r'F:\codingSpace\Python\rspi\output\audios\1527496724.082431.wav'
+    print(voice_to_text(audio_path)[0])
 
 
 if __name__ == '__main__':

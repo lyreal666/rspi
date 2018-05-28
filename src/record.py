@@ -39,7 +39,7 @@ def recode(seconds):
                     input=True,
                     frames_per_buffer=CHUNK)
 
-    debug("(***************start recording*********************")
+    debug(f"(***************start recording {seconds}秒*********************")
 
     frames = []
 
