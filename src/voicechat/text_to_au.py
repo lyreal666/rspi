@@ -4,7 +4,7 @@
 import logging
 from urllib import request
 from urllib.parse import quote
-from src.au_to_text import get_token
+from src.voicechat.au_to_text import get_token
 import hashlib
 
 logging.basicConfig(level=logging.DEBUG)
@@ -30,12 +30,8 @@ def text_to_voice(text):
     text = quote(text)
     file_name = get_file_name(text)
     token = get_token()
-    debug(token)
     url = url % (text, cuid, token)
-    debug(url)
     with request.urlopen(url) as ug:
-        debug("----------------------------")
-        debug(f"Status: {ug.status},{ug.reason}")
         data = ug.read()
         file_name = save_voice(data, file_name)
         return file_name

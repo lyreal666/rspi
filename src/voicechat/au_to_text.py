@@ -29,7 +29,6 @@ def get_token_url():
     token_url = f'https://aip.baidubce.com/oauth/2.0/token?' \
                 f'grant_type=client_credentials&' \
                 f'client_id={app_cfg["API_Key"]}&client_secret={app_cfg["Secret_Key"]}'
-    debug(f"token_url: {token_url}")
     return token_url
 
 
@@ -88,7 +87,9 @@ def voice_to_text(audio_path):
     with request.urlopen(req, data=json.dumps(data).encode('utf-8')) as f:
         data = json.loads(f.read().decode('utf-8'))
         if "result" in data:
-            return data["result"][0]
+            result = data["result"][0]
+            debug(f"语音转文字结果: {result}")
+            return result
         else:
             return None
 

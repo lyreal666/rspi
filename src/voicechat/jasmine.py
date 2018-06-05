@@ -18,7 +18,8 @@ __author__ = 'LY'
 
 def say2xiaoMei(text):
     if text is None:
-        raise ValueError(f"传给小美的数据有问题, text: {text}")
+        debug(f"传给小美的数据有问题: {text}")
+        return None
     config = json.load(open("../configs/jasmine.json", "r"))
     key = config["api_key"]
     secret = config["api_secret"]
@@ -31,6 +32,7 @@ def say2xiaoMei(text):
     url = f"{base_url}?api_key={key}&api_secret={secret}&limit=8&question={text}"
     with request.urlopen(url) as ug:
         ret_text = ug.read().decode("utf-8")
+        debug(f"小美回答的文字: {ret_text}")
         return ret_text
 
 

@@ -44,7 +44,7 @@ def play_mp3_task(path):
 
 
 def play_mp3(path):
-    t = threading.Thread(target=play_mp3_task, args=(path, ),name="play_mp3")
+    t = threading.Thread(target=play_mp3_task, args=(path, ), name="play_mp3")
     t.start()
 
 

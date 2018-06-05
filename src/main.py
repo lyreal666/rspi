@@ -3,13 +3,13 @@
 
 import logging
 import os
-import operator
-from src.record import recode
-from src.au_to_text import voice_to_text
-from src.text_to_au import text_to_voice,save_voice
-from src.jasmine import say2xiaoMei
-from src.tuling import say2tutu
-from src.play_audio import play_mp3
+from src.voicechat.record import recode
+from src.voicechat.au_to_text import voice_to_text
+from src.voicechat.text_to_au import text_to_voice
+from src.voicechat.jasmine import say2xiaoMei
+from src.voicechat.tuling import say2tutu
+from src.voicechat.play_audio import play_mp3
+from src.acquireInput import acquire
 
 logging.basicConfig(level=logging.DEBUG)
 debug = logging.debug
@@ -29,9 +29,11 @@ def clear_audios(max_count = 10):
     if len(files) >= max_count:
         for file in files[0: 10]:
             try:
-                os.remove(os.path.join(clear_dir, file))
+                os.remove(file)
             except PermissionError as pe:
                 debug(f"文件使用中, 文件: {file}")
+            except FileNotFoundError as fnfe:
+                debug(f"文件找不到: {file}")
 
 
 def test_chat():
@@ -48,8 +50,8 @@ def test_recode2text():
     print("录音转文字: ", voice_to_text(recode_path))
 
 
-def test_all():
-    recode_path = recode(2)
+def chat_once():
+    recode_path = recode(5)
     translation_text = voice_to_text(recode_path)
     xiaoMei_ret = say2xiaoMei(translation_text)
     audio_path = text_to_voice(xiaoMei_ret)
@@ -57,10 +59,18 @@ def test_all():
     clear_audios()
 
 
+def test_all():
+    acquire({
+        'RECD2PLAY': chat_once()
+    })
+
+
 def main():
     # test_chat()
     # test_recode2text()
+    # test_recd2play()
     test_all()
+
 
 
 if __name__ == '__main__':
