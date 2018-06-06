@@ -1,0 +1,10 @@
+{
+  "search_url": "http://127.0.0.1:8848/api/music/",
+  "get_url": "https://music-api-jwzcyzizya.now.sh/api/get/song/",
+  "vendor": ["netease", "xiao", "qq"],
+  "query": {
+    "id": 12345678,
+    "raw": false,
+    "br": 999000
+  }
+}
