@@ -1,12 +1,12 @@
 """PyAudio Example: Play a WAVE file."""
 
-import pyaudio
-import wave
-import pygame
-import time
+from time import sleep
 import threading
 import logging
 import subprocess
+import pyaudio
+import wave
+from pygame import mixer
 
 logging.basicConfig(level=logging.DEBUG)
 debug = logging.debug
@@ -36,21 +36,21 @@ def play_wav(audio_path):
     p.terminate()
 
 
-def play_mp3_task(path, duration):
+def _play_mp3_task(path, duration):
     VOLUME = 0.8
     DURATION = duration
 
-    pygame.mixer.init()
-    pygame.mixer.music.load(path)
-    pygame.mixer.music.set_volume(VOLUME)
-    if not pygame.mixer.music.get_busy():
-        pygame.mixer.music.play(loops=1, start=0.0)
-        time.sleep(DURATION)
+    mixer.init()
+    mixer.music.load(path)
+    mixer.music.set_volume(VOLUME)
+    if not mixer.music.get_busy():
+        mixer.music.play(loops=1, start=0.0)
+        sleep(DURATION)
 
 
 def play_mp3(path, duration=10):
     try:
-        t = threading.Thread(target=play_mp3_task, args=(path, duration), name="play_mp3")
+        t = threading.Thread(target=_play_mp3_task, args=(path, duration), name="play_mp3")
         t.start()
     except Exception as e:
         debug("Path； %s" % path)

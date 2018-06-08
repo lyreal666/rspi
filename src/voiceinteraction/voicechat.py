@@ -3,11 +3,7 @@
 
 import logging
 import os
-from utils.voice.record import recode
-from utils.voice.au_to_text import voice_to_text
-from utils.voice.text_to_au import text2audio
-from utils.voice.jasmine import say2xiaoMei
-from utils.voice.play_audio import play_mplayer, play_mp3
+from utils.voice import text2audio, recode, play_mp3, voice_to_text, say2xiaoMei
 from src.voiceinteraction.interceptor import intercept
 from src.acquireInput import acquire
 

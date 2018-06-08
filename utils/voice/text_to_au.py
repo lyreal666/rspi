@@ -6,6 +6,7 @@ import json
 from urllib import request
 from urllib.parse import quote
 from utils.voice.au_to_text import get_token
+from utils.voice.play_audio import play_mp3
 from utils.tpath import resolve
 import hashlib
 
@@ -23,7 +24,7 @@ def get_file_path(text):
     md5 = hashlib.md5()
     md5.update(text.encode('utf-8'))
     file_name = md5.hexdigest()
-    return resolve(__file__, "../output/audios/%s.mp3" % file_name)
+    return resolve(__file__, "../../output/audios/%s.mp3" % file_name)
 
 
 def text_to_voice(text):
@@ -51,11 +52,12 @@ def text2audio(text, file_path=""):
 
 
 def prompt2audio():
-    with open("../../configs/prompt.json", "r", encoding="utf-8") as fr:
+    with open(resolve(__file__, "../../configs/prompt.json"), "r", encoding="utf-8") as fr:
         prompts = json.load(fr)
         for keyword in prompts.keys():
             print(keyword)
-            text2audio(prompts[keyword], resolve(__file__,"../../static/musics/%s.mp3" % keyword))
+            path = text2audio(prompts[keyword], resolve(__file__, "../../static/musics/%s.mp3" % keyword))
+            play_mp3(path)
 
 
 def main():

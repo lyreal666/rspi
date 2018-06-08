@@ -1,0 +1,9 @@
+{
+    "requestUrl": "http://cn-north-1.api.acrcloud.com/v1/identify",
+    "key":  "afedf75085b2853896ca1f97c55e3c15",
+    "secret": "WpsCxRg82wO7CgqG1Eo5GHiWFgtURJWwav8P7oK0",
+    "dataType": "audio",
+    "httpUri": "/v1/identify",
+    "signatureVersion": "1",
+    "httpMethod": "POST"
+}

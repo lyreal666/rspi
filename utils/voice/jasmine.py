@@ -2,9 +2,6 @@
 # -*- encoding:utf-8 -*-
 
 import logging
-import json
-from utils.tpath import resolve
-import utils.tpath as tpath
 from urllib import request
 from urllib.parse import quote
 
@@ -22,7 +19,12 @@ def say2xiaoMei(text):
     if text is None:
         debug(f"传给小美的数据有问题: {text}")
         return None
-    config = json.load(open(resolve(__file__, "../../configs/jasmine.json"), "r"))
+    config = {
+              "name": "小美",
+              "api_key": "9183698feb3db651de542542d44ddde5",
+              "api_secret": "hfwbftot5hd4",
+              "url": "http://i.itpk.cn/api.php"
+            }
     key = config["api_key"]
     secret = config["api_secret"]
     base_url = config["url"]

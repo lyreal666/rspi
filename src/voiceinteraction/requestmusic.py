@@ -6,8 +6,8 @@ from urllib.parse import quote
 import json
 import os
 import re
-from utils.voice.play_audio import play_mp3
-from utils.voice.au_to_text import voice2txt
+from utils.voice import voice2txt, play_mp3
+from utils.tpath import resolve
 
 logging.basicConfig(level=logging.DEBUG)
 debug = logging.debug
@@ -18,12 +18,21 @@ __author__ = 'LY'
     
 '''
 
-music_cfg = json.load(open("../configs/music.json", "r"))
+music_cfg = {
+              "search_url": "http://127.0.0.1:8848/api/music/",
+              "get_url": "https://music-api-jwzcyzizya.now.sh/api/get/song/",
+              "vendor": ["netease", "xiao", "qq"],
+              "query": {
+                "id": 12345678,
+                "raw": False,
+                "br": 999000
+              }
+            }
 pattern = re.compile(r"(.+?)-(.+?)\.mp3$")
 
 
 def search_music(music_name):
-    musics = os.listdir("../output/music/")
+    musics = os.listdir(resolve(__file__, "../../output/music/"))
     for music in musics:
         result = pattern.match(music)
         if result and result.group(1) == music_name:
@@ -76,7 +85,7 @@ def save_music(music):
     file_name = "%s-%s.mp3" % (music["name"], music["singer"])
     with request.urlopen(url=music["downloadLink"]) as gr:
         data = gr.read()
-        file_path = "../output/music/%s" % file_name
+        file_path = resolve(__file__, "../../output/music/%s" % file_name)
         with open(file_path, "wb+") as fw:
             fw.write(data)
             return file_path
@@ -85,17 +94,17 @@ def save_music(music):
 def play_by_search(music_name):
     music = search_music(music_name)
     file_path = save_music(music)
-    play_mp3(file_path,120)
+    play_mp3(file_path, 120)
 
 
 def request_music():
-    play_mp3("../static/musics/点歌.mp3")
+    play_mp3(resolve(__file__, "../../static/musics/点歌.mp3"))
     text = voice2txt()
     play_by_search(text)
 
 
 def main():
-    play_by_search("大千世界")
+    play_by_search("the day you went away")
 
 
 if __name__ == '__main__':

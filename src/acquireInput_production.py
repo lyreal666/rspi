@@ -71,6 +71,7 @@ def acquire(instructions):
 
 def main():
     # acquire()
+    pass
 
 
 if __name__ == '__main__':

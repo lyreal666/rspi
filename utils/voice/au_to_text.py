@@ -3,11 +3,9 @@
 
 import logging
 import json
-import os.path as path
 from urllib import request
-from utils.tpath import resolve
 import base64
-import os
+from os import path
 from utils.voice.record import recode
 
 logging.basicConfig(level=logging.DEBUG)
@@ -18,10 +16,11 @@ __author__ = 'LY'
 '''
 '''
 
-try:
-    app_cfg = json.load(open(resolve(__file__, "../../configs/baidu_yuyin.json"), "r"))
-except Exception as e:
-    debug("解析配置信息出现问题:", e)
+app_cfg = {
+    "App_ID": 11280078,
+    "API_Key": "GbND3fk7GhXyYenDjoIX9MPL",
+    "Secret_Key": "1d66d753119c35eb25b45d235a07b48f"
+}
 
 
 def get_token_url():
@@ -45,10 +44,9 @@ def get_token():
         with request.urlopen(token_url) as ug:
             data = json.loads(ug.read().decode("utf-8"))
             token = data["access_token"]
+            return token
     except Exception as exp:
         debug('获取token异常,请检查网络', exp)
-
-    return token
 
 
 def voice_to_text(audio_path):
@@ -68,7 +66,7 @@ def voice_to_text(audio_path):
     # 以字节格式读取文件之后进行编码
     with open(audio_path, "rb") as f:
         speech = base64.b64encode(f.read()).decode('utf-8')
-    size = os.path.getsize(audio_path)
+    size = path.getsize(audio_path)
     url = "https://vop.baidu.com/server_api"
     data = {
         "format": FORMAT,
@@ -100,8 +98,6 @@ def voice_to_text(audio_path):
 def voice2txt(durations=5):
     file_path = recode(durations)
     return voice_to_text(file_path)
-
-
 
 
 def main():
