@@ -5,8 +5,9 @@ import multiprocessing
 from time import sleep
 from datetime import datetime
 from picamera import PiCamera
-from utils.tmail import mail
 from utils.tpath import resolve
+from utils.tmail import mail
+
 
 __author__ = 'LY'
 
@@ -24,15 +25,15 @@ def _loop_photograph(duration):
     :param duration:
     :return:
     """
+    camera = PiCamera()
+    camera.resolution = (1024, 768)
+    camera.start_preview()
+    # Camera warm-up time
+    sleep(2)
     while True:
         sleep(duration)
-        camera = PiCamera()
-        camera.resolution = (1024, 768)
-        camera.start_preview()
-        # Camera warm-up time
-        sleep(2)
         now_time_str = datetime.now().strftime("%Y-%m-%d-%H-%M-%S")
-        img_path = resolve(__file__, '../../configs/photos/%s.jpg' % now_time_str)
+        img_path = resolve(__file__, '../../output/photos/%s.jpg' % now_time_str)
         camera.capture(img_path)
         mail(img_path)
 
@@ -43,7 +44,7 @@ def photograph(duration):
     :param duration:
     :return:
     """
-    process = multiprocessing.Process(_loop_photograph, args=(duration,))
+    process = multiprocessing.Process(target=_loop_photograph, args=(duration,))
     print("Start photograph surveillance...")
     process.daemon = True
     process.start()

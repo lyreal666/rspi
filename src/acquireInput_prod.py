@@ -6,7 +6,8 @@ import threading
 import RPi.GPIO as GPIO
 import time
 from enum import Enum, unique
-from src.globalVariables import GREEN, YELLOW
+from .cameraMonitor.surveillance import photograph
+from src.globals import GREEN, YELLOW
 
 logging.basicConfig(level=logging.DEBUG)
 debug = logging.debug
@@ -64,6 +65,8 @@ def acquire(instructions):
             ctrlLED(GREEN, LEDMode.OFF)
             ctrlLED(YELLOW, LEDMode.OFF)
             exit(0)
+        elif instruction.lower().strip() == "ps":
+            photograph(20)
         else:
             print("输入命令无法识别")
             ctrlLED(YELLOW, LEDMode.BLINK)

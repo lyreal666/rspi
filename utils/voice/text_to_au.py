@@ -38,16 +38,13 @@ def text_to_voice(text):
         return data
 
 
-def save_voice(data, file_path):
-    with open(file_path, "wb") as fw:
-        fw.write(data)
-
-
 def text2audio(text, file_path=""):
     data = text_to_voice(text)
     if file_path.strip() == '':
+
         file_path = get_file_path(text)
-    save_voice(data, file_path)
+    with open(file_path, "wb") as fw:
+        fw.write(data)
     return file_path
 
 

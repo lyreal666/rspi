@@ -3,7 +3,7 @@
 
 import logging
 import re
-from src.voiceinteraction.keywords import keywords_map
+from .keywords import keywords_map
 
 logging.basicConfig(level=logging.DEBUG)
 debug = logging.debug
@@ -20,6 +20,8 @@ for keyword in keywords_map:
 
 
 def intercept(words):
+    if words is None:
+        return print("words is None")
     for key in keywords_map:
         rs = keywords_map[key]["pattern"].match(words)
         if rs:
@@ -27,7 +29,6 @@ def intercept(words):
             print("开始%s" % key)
             return False
     return True
-
 
 
 def main():

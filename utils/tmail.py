@@ -62,6 +62,7 @@ def mail(imgPath):
         server.set_debuglevel(1)  # 打印出和SMTP服务器交互的所有信息
         server.login(from_addr, password)
         server.sendmail(from_addr, [to_addr], msg.as_string())
+        print("邮件已经发送...")
         server.quit()
 
 

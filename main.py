@@ -1,10 +1,9 @@
 #!/usr/bin/env python
 # -*- encoding:utf-8 -*-
 
-import logging
+from src.voiceinteraction.voicechat import chat_once
+from src.acquireInput import acquire
 
-logging.basicConfig(level=logging.DEBUG)
-debug = logging.debug
 
 __author__ = 'LY'
 
@@ -12,12 +11,13 @@ __author__ = 'LY'
     
 '''
 
-# 两个LED灯
-global GREEN
-global YELLOW
+
+def test_chat():
+    chat_once()
+
 
 def main():
-    pass
+    acquire()
 
 
 if __name__ == '__main__':

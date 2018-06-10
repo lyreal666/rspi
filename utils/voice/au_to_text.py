@@ -23,23 +23,14 @@ app_cfg = {
 }
 
 
-def get_token_url():
-    r"""
-    读取配置,拼凑用来获取访问令牌的url,并返回该url
-    :return:
-    """
-    token_url = f'https://aip.baidubce.com/oauth/2.0/token?' \
-                f'grant_type=client_credentials&' \
-                f'client_id={app_cfg["API_Key"]}&client_secret={app_cfg["Secret_Key"]}'
-    return token_url
-
-
 def get_token():
     r"""
     返回访问令牌
     :return:
     """
-    token_url = get_token_url()
+    token_url = f'https://aip.baidubce.com/oauth/2.0/token?' \
+                f'grant_type=client_credentials&' \
+                f'client_id={app_cfg["API_Key"]}&client_secret={app_cfg["Secret_Key"]}'
     try:
         with request.urlopen(token_url) as ug:
             data = json.loads(ug.read().decode("utf-8"))
@@ -58,7 +49,7 @@ def voice_to_text(audio_path):
     token = get_token()
 
     # 设置格式
-    RATE = "16000"
+    RATE = "44100"
     FORMAT = "wav"
     CUID = "120.78.173.232"
     DEV_PID = "1536"
@@ -89,9 +80,10 @@ def voice_to_text(audio_path):
         data = json.loads(f.read().decode('utf-8'))
         if "result" in data:
             result = data["result"][0]
-            debug(f"语音转文字结果: {result}")
+            print(f"语音转文字结果: {result}")
             return result
         else:
+            print("语音转文字结果: 失败")
             return None
 
 

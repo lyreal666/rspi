@@ -4,8 +4,7 @@
 import logging
 import os
 from utils.voice import text2audio, recode, play_mp3, voice_to_text, say2xiaoMei
-from src.voiceinteraction.interceptor import intercept
-from src.acquireInput import acquire
+from .interceptor import intercept
 
 logging.basicConfig(level=logging.DEBUG)
 debug = logging.debug
@@ -44,14 +43,10 @@ def chat_once():
 
 
 
-def test_all():
-    acquire({
-        'RECD2PLAY': chat_once()
-    })
 
 
 def main():
-    test_all()
+    pass
 
 
 if __name__ == '__main__':

@@ -47,6 +47,7 @@ def search_music(music_name):
     search_url = "%s%s" % (music_cfg["search_url"], quote(music_name))
     with request.urlopen(url=search_url) as gr:
         rs = json.loads(gr.read().decode("utf-8"))
+        print(rs)
         if not rs["success"]:
             debug("搜索歌曲%s失败" % music_name)
             return None

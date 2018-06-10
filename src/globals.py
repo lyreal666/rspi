@@ -3,8 +3,8 @@
 
 import logging
 import RPi.GPIO as GPIO
-from src.globalVariables import GREEN, YELLOW
-from src.acquireInput_production import ctrlLED, LEDMode
+from src.globals import GREEN, YELLOW
+from src.acquireInput_prod import ctrlLED, LEDMode
 
 logging.basicConfig(level=logging.DEBUG)
 debug = logging.debug
@@ -15,6 +15,9 @@ __author__ = 'LY'
     
 '''
 
+# 两个LED灯
+global GREEN
+global YELLOW
 
 
 def LEDConfig():
@@ -22,6 +25,8 @@ def LEDConfig():
     配置LED
     :return:
     """
+    global GREEN
+    global YELLOW
     GREEN = 6
     YELLOW = 18
 
@@ -34,10 +39,7 @@ def LEDConfig():
     ctrlLED(YELLOW, LEDMode.OFF)
 
 
-
-
 LEDConfig()
-
 
 
 def main():

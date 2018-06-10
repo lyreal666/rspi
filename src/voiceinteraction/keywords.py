@@ -2,7 +2,7 @@
 # -*- encoding:utf-8 -*-
 
 import logging
-from src.voiceinteraction.requestmusic import request_music
+from .requestmusic import request_music
 
 logging.basicConfig(level=logging.DEBUG)
 debug = logging.debug
@@ -20,7 +20,6 @@ keywords_map = {
         "func": request_music
     }
 }
-
 
 
 def main():
