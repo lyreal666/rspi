@@ -3,6 +3,7 @@
 
 import logging
 import json
+import os
 from urllib import request
 from urllib.parse import quote
 from utils.voice.au_to_text import get_token
@@ -53,8 +54,9 @@ def prompt2audio():
         prompts = json.load(fr)
         for keyword in prompts.keys():
             print(keyword)
-            path = text2audio(prompts[keyword], resolve(__file__, "../../static/musics/%s.mp3" % keyword))
-            play_mp3(path)
+            if keyword not in [file_name[0: -4] for file_name in os.listdir(r"F:\codingSpace\Python\rspi\static\audios")]:
+                path = text2audio(prompts[keyword], resolve(__file__, "../../static/audios/%s.mp3" % keyword))
+                play_mp3(path)
 
 
 def main():

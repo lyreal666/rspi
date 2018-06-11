@@ -48,6 +48,19 @@ def photograph(duration):
     print("Start photograph surveillance...")
     process.daemon = True
     process.start()
+    return process
+
+
+def take_photo():
+    camera = PiCamera()
+    camera.resolution = (1024, 768)
+    camera.start_preview()
+    # Camera warm-up time
+    sleep(2)
+    now_time_str = datetime.now().strftime("%Y-%m-%d-%H-%M-%S")
+    img_path = resolve(__file__, '../../output/photos/%s.jpg' % now_time_str)
+    camera.capture(img_path)
+    return img_path
 
 
 if __name__ == '__main__':

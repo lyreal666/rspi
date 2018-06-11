@@ -95,11 +95,11 @@ def save_music(music):
 def play_by_search(music_name):
     music = search_music(music_name)
     file_path = save_music(music)
-    play_mp3(file_path, 120)
+    play_mp3(file_path)
 
 
 def request_music():
-    play_mp3(resolve(__file__, "../../static/musics/点歌.mp3"))
+    play_mp3(resolve(__file__, "../../static/audios/点歌.mp3"))
     text = voice2txt()
     play_by_search(text)
 

@@ -5,12 +5,13 @@ import platform
 import threading
 import logging
 import subprocess
-# import pyaudio
-# import wave
+from pydub import AudioSegment
 
 logging.basicConfig(level=logging.DEBUG)
 debug = logging.debug
 
+# import pyaudio
+# import wave
 
 # def play_wav(audio_path):
 #     CHUNK = 1024
@@ -36,35 +37,38 @@ debug = logging.debug
 #     p.terminate()
 
 
-def _play_mp3_task(path, duration):
-    from pygame import mixer
-    VOLUME = 0.8
-    DURATION = duration
-
-    mixer.init()
+def _play_mp3_task(mixer, path, duration):
     mixer.music.load(path)
-    mixer.music.set_volume(VOLUME)
-    if not mixer.music.get_busy():
-        mixer.music.play(loops=1, start=0.0)
-        sleep(DURATION)
+    mixer.music.set_volume(0.8)
+    while True:
+        if not mixer.music.get_busy():
+            mixer.music.play(loops=1, start=0.0)
+            sleep(duration)
+            break
+        else:
+            pass
 
 
 def play_mplayer(path):
-    r = subprocess.call(["mplayer", path])
-    return r
+    subprocess.run(["mplayer", path])
 
 
-def play_mp3(path, duration=10):
-    if platform.platform().split('-')[0] == "Windows":
+def play_mp3(path):
+    ops = platform.platform().split('-')[0]
+    sound = AudioSegment.from_mp3(path)
+    duration = len(sound)
+    if ops == "Windows":
+        from pygame import mixer
+        mixer.init()
         try:
-            t = threading.Thread(target=_play_mp3_task, args=(path, duration), name="play_mp3")
+            t = threading.Thread(target=_play_mp3_task, args=(mixer, path, duration), name="play_mp3")
             t.start()
         except Exception as e:
             debug("Path； %s" % path)
             debug(e)
-    elif platform.platform().split('-')[0] == "Linux":
+    elif ops == "Linux":
         play_mplayer(path)
 
 
 if __name__ == "__main__":
-    play_mp3("../../output/audios/zwjs.mp3")
+    play_mp3(r"F:\codingSpace\Python\rspi\static\audios\a.mp3")

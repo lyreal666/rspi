@@ -49,7 +49,7 @@ def voice_to_text(audio_path):
     token = get_token()
 
     # 设置格式
-    RATE = "44100"
+    RATE = "16000"
     FORMAT = "wav"
     CUID = "120.78.173.232"
     DEV_PID = "1536"
@@ -78,6 +78,7 @@ def voice_to_text(audio_path):
                                  'Version/8.0 Mobile/10A5376e Safari/8536.25')
     with request.urlopen(req, data=json.dumps(data).encode('utf-8')) as f:
         data = json.loads(f.read().decode('utf-8'))
+        print(data)
         if "result" in data:
             result = data["result"][0]
             print(f"语音转文字结果: {result}")
@@ -93,10 +94,7 @@ def voice2txt(durations=5):
 
 
 def main():
-    # audio_path = r'../static/audios/A2_1.wav'
-    # audio_path = r'F:\codingSpace\Python\rspi\output\audios\1527496724.082431.wav'
-    # print(voice_to_text(audio_path)[0])
-    print(__file__)
+    print(voice_to_text(r"F:\codingSpace\Python\rspi\static\audios\A2_1.wav"))
 
 
 if __name__ == '__main__':
