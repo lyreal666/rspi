@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <style>
+        #photo {
+            width: 1024px;
+            height: 768px;
+            border: 2px solid black
+        }
+    </style>
+    <title>Title</title>
+</head>
+<body>
+    <center>
+        <form method="post" action="/config">
+            <img id="photo" src="{{photoUrl}}">
+            <div>
+                <button type="submit">拍照</button>
+            </div>
+        </form>
+    </center>
+</body>
+</html>

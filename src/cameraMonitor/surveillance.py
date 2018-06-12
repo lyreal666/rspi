@@ -30,11 +30,15 @@ def _loop_photograph(duration):
     camera.start_preview()
     # Camera warm-up time
     sleep(2)
+    count = 1
     while True:
         sleep(duration)
+        print("开始第%d次拍照" % count)
+        count += 1
         now_time_str = datetime.now().strftime("%Y-%m-%d-%H-%M-%S")
         img_path = resolve(__file__, '../../output/photos/%s.jpg' % now_time_str)
         camera.capture(img_path)
+        print("开始发送邮件")
         mail(img_path)
 
 
@@ -44,21 +48,17 @@ def photograph(duration):
     :param duration:
     :return:
     """
-    process = multiprocessing.Process(target=_loop_photograph, args=(duration,))
     print("Start photograph surveillance...")
+    process = multiprocessing.Process(target=_loop_photograph, args=(duration,))
     process.daemon = True
     process.start()
     return process
 
 
-def take_photo():
-    camera = PiCamera()
-    camera.resolution = (1024, 768)
-    camera.start_preview()
-    # Camera warm-up time
-    sleep(2)
+def take_photo(camera):
     now_time_str = datetime.now().strftime("%Y-%m-%d-%H-%M-%S")
-    img_path = resolve(__file__, '../../output/photos/%s.jpg' % now_time_str)
+    img_path = resolve(__file__, '../../static/photos/%s.jpg' % now_time_str)
+    print("开始拍照...")
     camera.capture(img_path)
     return img_path
 

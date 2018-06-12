@@ -1,6 +1,7 @@
 """PyAudio Example: Play a WAVE file."""
 
 from time import sleep
+from os.path import normpath
 import platform
 import threading
 import logging
@@ -55,9 +56,9 @@ def play_mplayer(path):
 
 def play_mp3(path):
     ops = platform.platform().split('-')[0]
-    sound = AudioSegment.from_mp3(path)
-    duration = len(sound)
     if ops == "Windows":
+        sound = AudioSegment.from_mp3(path)
+        duration = len(sound)
         from pygame import mixer
         mixer.init()
         try:
@@ -67,6 +68,11 @@ def play_mp3(path):
             debug("Path； %s" % path)
             debug(e)
     elif ops == "Linux":
+        path = normpath("/home/pi/projects/rspi/" + path.replace(r"F:\codingSpace\Python\rspi", '')[1:])
+        path = path.replace("\\", '/')
+        print("播放音乐路径: %s" % path)
+        print("抱歉该树莓派音频接口坏了》。。")
+        return
         play_mplayer(path)
 
 

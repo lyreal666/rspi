@@ -29,7 +29,7 @@ with request.urlopen(configs["tokenUrl"] % (configs["key"], configs["secret"])) 
 
 def face_comparison(img_src_path, img_cped_path):
     if access_token is None:
-        print("为获取到access_token!!!")
+        print("没有获取到access_token!!!")
     with open(img_src_path, 'rb') as sr:
         with open(img_cped_path, 'rb') as cpedr:
             img_src = base64.b64encode(sr.read()).decode("utf-8")
